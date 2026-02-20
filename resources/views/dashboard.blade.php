@@ -35,7 +35,7 @@
     </style>
 
     <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="container-fluid px-3">
             <div class="content">
 
                 <!-- Formulario de reservas -->
@@ -104,7 +104,7 @@
                 <div class="table-container">
                     <h4 class="mb-3 text-center text-success">Reservas recientes</h4>
 
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-bordered table-hover align-middle mb-0 w-100 small">
                         <thead class="table-success">
                             <tr>
                                 <th>Nombre</th>
@@ -126,9 +126,11 @@
                                     <td>{{ $reserva->fecha_salida }}</td>
                                     <td>{{ $reserva->habitacion }}</td>
                                     <td>{{ $reserva->personas }}</td>
-                                    <td>{{ $reserva->comentarios }}</td>
+                                    <td style="max-width: 200px; word-break: break-word;">{{ $reserva->comentarios }}</td>
                                     <td>
-                                        <a href="{{ route('reservas.edit', $reserva) }}" class="btn btn-warning btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <a href="{{ route('reservas.edit', $reserva) }}" class="btn btn-warning btn-sm mb-2"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <br>
+
                                         <form action="{{ route('reservas.destroy', $reserva) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('¿Está seguro de eliminar esta reserva?');">
                                             @csrf
                                             @method('DELETE')
@@ -141,14 +143,14 @@
                             @endforelse
                         </tbody>
                     </table>
-                     <div class="text-center mt-3">
-                        <a href="{{ route('export.reservas') }}" class="btn btn-success">
-                            <i class="fa-solid fa-file-excel"></i> Exportar a Excel
-                        </a>
-                    </div>
-                    <a href="{{ route('export.reservas.pdf') }}" class="btn btn-danger mt-2" target="_blank">
-                        <i class="fa-solid fa-file-pdf"></i> Descargar PDF
-                    </a>
+                         <div class="text-center mt-3 d-flex justify-content-center gap-2">
+                            <a href="{{ route('export.reservas') }}" class="btn btn-success">
+                                <i class="fa-solid fa-file-excel"></i> Exportar a Excel
+                            </a>
+                            <a href="{{ route('export.reservas.pdf') }}" class="btn btn-danger" target="_blank">
+                                <i class="fa-solid fa-file-pdf"></i> Descargar PDF
+                            </a>
+                        </div>
                     </div>
                 </div>
 
