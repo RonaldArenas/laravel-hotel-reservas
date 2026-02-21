@@ -103,6 +103,11 @@
                 <!-- Tabla de reservas -->
                 <div class="table-container">
                     <h4 class="mb-3 text-center text-success">Reservas recientes</h4>
+                    @if (session('reserva_success'))
+                        <div class="alert alert-success mt-3">
+                            {{ session('reserva_success') }}
+                        </div>
+                    @endif
 
                     <table class="table table-bordered table-hover align-middle mb-0 w-100 small">
                         <thead class="table-success">

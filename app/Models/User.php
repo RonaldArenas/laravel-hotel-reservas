@@ -28,5 +28,8 @@ class User extends Authenticatable
     // Ocultar campos sensibles en JSON
     protected $hidden = [
         'password',
+        'remember_token',
     ];
+
+   
 }

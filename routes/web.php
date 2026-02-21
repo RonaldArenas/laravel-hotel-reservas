@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\HabitacionController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\Auth\RegisterController;
 
 // Página de inicio
 Route::get('/', function () {
@@ -44,3 +45,6 @@ Route::middleware('auth')->group(function () {
 
 // Autenticación (Breeze/Jetstream)
 require __DIR__.'/auth.php';
+
+Route::get('/register', [RegisterController::class, 'create'])->name('register');
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');

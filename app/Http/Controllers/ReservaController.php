@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reserva;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\ReservaConfirmadaMail;
+use Illuminate\Support\Facades\Mail;
 
 class ReservaController extends Controller
 {
@@ -34,7 +36,7 @@ class ReservaController extends Controller
             'comentarios'=>'nullable|string',
         ]);
 
-        Reserva::create([
+        $reserva = Reserva::create([
             'user_id' => Auth::id(),
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
@@ -47,7 +49,17 @@ class ReservaController extends Controller
             'updated_by' => Auth::id(),
         ]);
 
-        return redirect()->back()->with('reserva_msg', ['type'=>'success', 'text'=>'Reserva creada correctamente']);
+            // ✅ NUEVO: enviar correo
+            Mail::to(Auth::user()->email)
+                 ->send(new ReservaConfirmadaMail($reserva));
+        
+            // ✅ NUEVO: mensaje en dashboard
+            return back()->with(
+                'reserva_success',
+                'Reserva registrada y correo enviado con éxito'
+            );
+
+        
     }
 
     // Mostrar formulario de edición
