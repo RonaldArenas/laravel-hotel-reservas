@@ -2,33 +2,33 @@
 
 namespace App\Mail;
 
+use App\Models\Reserva;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
 class ReservaConfirmadaMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Datos de la reserva
-     */
     public $reserva;
+    public $usuario;
 
-    /**
-     * Crear una nueva instancia del mensaje
-     */
-    public function __construct($reserva)
+    public function __construct(Reserva $reserva)
     {
         $this->reserva = $reserva;
+        $this->usuario = Auth::user(); // 👈 usuario logueado
     }
 
-    /**
-     * Construir el mensaje
-     */
     public function build()
     {
-        return $this->subject('Confirmación de Reserva - Hotel Naturaleza')
-                    ->view('emails.reserva-confirmada');
+        return $this
+            ->subject('Reserva confirmada - Hotel Naturaleza')
+            ->view('emails.reserva-confirmada')
+            ->with([
+                'reserva' => $this->reserva,
+                'usuario' => $this->usuario,
+            ]);
     }
 }

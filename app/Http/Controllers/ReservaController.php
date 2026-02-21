@@ -111,6 +111,4 @@ public function destroy(Reserva $reserva)
     return redirect()->route('dashboard')->with('reserva_msg', ['type'=>'success','text'=>'Reserva eliminada correctamente']);
 }
 
-
-
 }
